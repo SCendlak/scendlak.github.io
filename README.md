@@ -1,2 +1,2 @@
-# cendlak.github.io
+# scendlak.github.io
 temp portfolio
