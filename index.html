@@ -1,16 +1,51 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cendlak's space</title>
-<!--    <link rel="stylesheet" href="./style.css">-->
-<!--    <link rel="icon" href="./favicon.ico" type="image/x-icon">-->
+    <title>Stan Cendlak - be my guest :)</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /*background: linear-gradient(135deg, #00008B, #20B2AA); !* dark blue to ocean teal *!*/
+            font-family: Arial, sans-serif;
+            background: linear-gradient(-90deg, #de52ee, #8f3ce7, #23a6d5, #23d5ab, #25d3ba);
+            background-size: 300% 300%;
+            animation: background-pulse 10s ease infinite;
+        }
+
+        .message {
+            color: white;
+            font-size: 3rem;
+            text-align: center;
+            animation: pulse ease-in 2s infinite;
+        }
+
+        @keyframes background-pulse {
+            0% {
+                background-position: 0 50%;
+            }
+            50% {
+                background-position: 100% 75%;
+            }
+            100% {
+                background-position: 0 50%;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.01); }
+            100% { transform: scale(1); }
+        }
+    </style>
 </head>
 <body>
-<main>
-    <h1>Welcome to My Website</h1>
-</main>
-    <script src="index.js"></script>
+<div class="message">Page in Progress</div>
+    <script src="page/index.js"></script>
 </body>
 </html>
