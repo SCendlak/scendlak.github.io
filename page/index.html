@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work in Progress</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1, #fbc2eb);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: white;
+      text-align: center;
+    }
+    
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .container {
+      max-width: 600px;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    p {
+      margin-bottom: 2rem;
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    
+    .donut-container {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    
+    #donut {
+      background-color: black;
+      border-radius: 10px;
+      padding: 20px;
+      color: white;
+      font-family: monospace;
+      font-size: 10px;
+      line-height: 10px;
+      letter-spacing: 0px;
+      white-space: pre;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        width: 90%;
+        padding: 1.5rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      #donut {
+        font-size: 8px;
+        line-height: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Work in Progress</h1>
+    <p>We're building something amazing. Check back soon!</p>
+    
+    <div class="donut-container">
+      <div id="donut" style='color: 'white'></div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // ASCII donut code based on the classic donut.c by Andy Sloane
+      const donutElement = document.getElementById('donut');
+      const width = 80;
+      const height = 24;
+      
+      // Create buffer arrays
+      const b = new Array(width * height).fill(32);
+      const z = new Array(width * height).fill(0);
+      
+      // Characters for rendering
+      const chars = '.,-~:;=!*#$@'.split('');
+      
+      // Animation variables
+      let A = 0;
+      let B = 0;
+      
+      function render() {
+        // Clear the buffers
+        b.fill(32);
+        z.fill(0);
+        
+        // Trigonometric values for rotation
+        const cosA = Math.cos(A);
+        const sinA = Math.sin(A);
+        const cosB = Math.cos(B);
+        const sinB = Math.sin(B);
+        
+        // Render the donut
+        for (let theta = 0; theta < 2 * Math.PI; theta += 0.07) {
+          const cosTheta = Math.cos(theta);
+          const sinTheta = Math.sin(theta);
+          
+          for (let phi = 0; phi < 2 * Math.PI; phi += 0.02) {
+            const cosPhi = Math.cos(phi);
+            const sinPhi = Math.sin(phi);
+            
+            // 3D coordinates of the torus
+            const circleX = cosTheta + 2;
+            const circleY = sinTheta;
+            
+            // Perform 3D rotations
+            const x = circleX * (cosB * cosPhi + sinA * sinB * sinPhi) - circleY * cosA * sinB;
+            const y = circleX * (sinB * cosPhi - sinA * cosB * sinPhi) + circleY * cosA * cosB;
+            const z = cosA * circleX * sinPhi + circleY * sinA;
+            const ooz = 1 / (z + 5); // One over z
+            
+            // Project 3D to 2D
+            const xp = Math.floor(width / 2 + 30 * ooz * x);
+            const yp = Math.floor(height / 2 + 15 * ooz * y);
+            
+            // Calculate luminance
+            const L = cosPhi * cosTheta * sinB - cosA * cosTheta * sinPhi - sinA * sinTheta + cosB * (cosA * sinTheta - cosTheta * sinA * sinPhi);
+            
+            // Only render if point is in front and within bounds
+            if (L > 0 && xp >= 0 && xp < width && yp >= 0 && yp < height) {
+              const idx = xp + yp * width;
+              const luminanceIndex = Math.floor(L * 8);
+              
+              // Only render if closer to viewer
+              if (ooz > z[idx]) {
+                z[idx] = ooz;
+                b[idx] = chars[luminanceIndex > 0 ? luminanceIndex : 0];
+              }
+            }
+          }
+        }
+        
+        // Render the buffer to HTML
+        let output = '';
+        for (let i = 0; i < height; i++) {
+          for (let j = 0; j < width; j++) {
+            output += String.fromCharCode(b[j + i * width]);
+          }
+          output += '\n';
+        }
+        donutElement.textContent = output;
+        
+        // Update rotation angles
+        A += 0.04;
+        B += 0.02;
+        
+        // Continue animation
+        requestAnimationFrame(render);
+      }
+      
+      // Start animation
+      render();
+      
+      // Colorize the ASCII art with a rainbow gradient effect
+      let hue = 0;
+      function colorize() {
+        hue = (hue + 1) % 360;
+        donutElement.style.color = `hsl(${hue}, 100%, 70%)`;
+        setTimeout(colorize, 100);
+      }
+      colorize();
+    })();
+  </script>
+</body>
+</html>
