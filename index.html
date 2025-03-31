@@ -1,55 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stan Cendlak - be my guest :)</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /*background: linear-gradient(135deg, #00008B, #20B2AA); !* dark blue to ocean teal *!*/
-            font-family: Arial, sans-serif;
-            background: linear-gradient(-90deg, #de52ee, #8f3ce7, #23a6d5, #23d5ab, #25d3ba);
-            background-size: 300% 300%;
-            animation: background-pulse 10s ease infinite;
-        }
-
-        .message {
-            color: white;
-            font-size: 3rem;
-            text-align: center;
-            animation: pulse ease-in 2s infinite;
-        }
-
-        @keyframes background-pulse {
-            0% {
-                background-position: 0 50%;
-            }
-            50% {
-                background-position: 100% 75%;
-            }
-            100% {
-                background-position: 0 50%;
-            }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.01); }
-            100% { transform: scale(1); }
-        }
-    </style>
-</head>
-<body>
-<div class="message">Page in Progress</div>
-    <script src="page/index.js"></script>
-</body>
-</html>
- -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,7 +21,7 @@
             font-size: 2rem;
             margin-bottom: 20px;
             color: "white"
-            /* ackground: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #00ff00, #007bff, #4b0082, #9400d3);
+            /* background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #00ff00, #007bff, #4b0082, #9400d3);
             background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -94,12 +42,12 @@
     </style>
 </head>
 <body>
-<div style="    background-color: rgb(0 0 0 / 0.5); border-radius: 45px; padding: 25px">
-    <h1 style="oppacity: 0;">Page in Progress...</h1>
+<div style="background-color: rgb(0 0 0 / 0.5); border-radius: 45px; padding: 25px">
+    <h1>Page in Progress...</h1>
 
 </div>
     <div style="position: absolute; left:0; z-index: -1; width: 100vh; height: 100vh">
-    <canvas id="canvasdonut" ></canvas>
+        <canvas id="canvasdonut" ></canvas>
     </div>
     
     <script>
@@ -117,7 +65,7 @@
 
             function drawDonut() {
                 A += 0.03;
-                B += 0.02;
+                B += 0.01;
                 var width = canvas.width, height = canvas.height;
                 var R1 = Math.min(width, height) / 8, R2 = R1 / 2, K1 = 300, K2 = width;
                 ctx.fillStyle = "#111";
@@ -152,7 +100,8 @@
             }
 
             function getColorGradient(index) {
-                const colors = ["#FF0000", "#FF7300", "#FFFB00", "#00FF00", "#007BFF", "#9400D3"];
+                // const colors = ["#ffbe0b", "#fb5607", "#ff006e", "#8338ec", "#3a86ff", "#9400D3"];
+                const colors = ["#370617","#6a040f","#9d0208","#d00000","#dc2f02"]
                 return colors[index % colors.length];
             }
 
